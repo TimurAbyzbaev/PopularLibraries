@@ -1,24 +1,21 @@
 package com.example.mvp
 
-class MainPresenter(val view: MainView) {
+class MainPresenter(private val view: MainView) {
     private val model = CountersModel()
 
-    //тут ошибка
-    fun counterClick(id: Int) {
-        when (id) {
-            R.id.btn_counter1 -> {
-                val nextValue = model.next(0)
-                view.setButtonText(0, nextValue.toString())
-            }
-            R.id.btn_counter2 -> {
-                val nextValue = model.next(1)
-                view.setButtonText(1, nextValue.toString())
-            }
-            R.id.btn_counter3 -> {
-                val nextValue = model.next(2)
-                view.setButtonText(2, nextValue.toString())
-            }
-        }
+    //Архитектурная ошибка. В качестве практического задания -- исправить
+    fun firstCounterClick() {
+        val nextValue = model.next(0)
+        view.setFirstCounterText(nextValue.toString())
     }
 
+    fun secondCounterClick() {
+        val nextValue = model.next(1)
+        view.setSecondCounterText(nextValue.toString())
+    }
+
+    fun thirdCounterClick() {
+        val nextValue = model.next(2)
+        view.setThirdCounterText(nextValue.toString())
+    }
 }
