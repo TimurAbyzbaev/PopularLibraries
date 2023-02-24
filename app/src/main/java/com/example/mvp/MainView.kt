@@ -1,5 +1,7 @@
 package com.example.mvp
 
 interface MainView {
-    fun setButtonText(index: Int, text: String)
+    fun setFirstCounterText(text: String)
+    fun setSecondCounterText(text: String)
+    fun setThirdCounterText(text: String)
 }

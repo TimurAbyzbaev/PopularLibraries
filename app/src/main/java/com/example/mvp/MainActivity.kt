@@ -7,28 +7,38 @@ import com.example.mvp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainView {
 
-    private var vb: ActivityMainBinding? = null
+    private var binding: ActivityMainBinding? = null
     private val presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vb = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(vb?.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
-        val listener = View.OnClickListener {
-            presenter.counterClick(it.id)
+        val listenerButton1 = View.OnClickListener {
+            presenter.firstCounterClick()
+        }
+        val listenerButton2 = View.OnClickListener {
+            presenter.secondCounterClick()
+        }
+        val listenerButton3 = View.OnClickListener {
+            presenter.thirdCounterClick()
         }
 
-        vb?.btnCounter1?.setOnClickListener(listener)
-        vb?.btnCounter2?.setOnClickListener(listener)
-        vb?.btnCounter3?.setOnClickListener(listener)
+        binding?.btnCounter1?.setOnClickListener(listenerButton1)
+        binding?.btnCounter2?.setOnClickListener(listenerButton2)
+        binding?.btnCounter3?.setOnClickListener(listenerButton3)
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when (index) {
-            0 -> vb?.btnCounter1?.text = text
-            1 -> vb?.btnCounter2?.text = text
-            2 -> vb?.btnCounter3?.text = text
-        }
+    override fun setFirstCounterText(text: String) {
+        binding?.btnCounter1?.text = text
+    }
+
+    override fun setSecondCounterText(text: String) {
+        binding?.btnCounter2?.text = text
+    }
+
+    override fun setThirdCounterText(text: String) {
+        binding?.btnCounter3?.text = text
     }
 }
