@@ -1,33 +1,23 @@
 package com.example.mvp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.example.mvp.databinding.ActivityMainBinding
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     private var binding: ActivityMainBinding? = null
-    private val presenter = MainPresenter(this)
+    private val presenter by moxyPresenter { MainPresenter (CountersModel()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val listenerButton1 = View.OnClickListener {
-            presenter.firstCounterClick()
-        }
-        val listenerButton2 = View.OnClickListener {
-            presenter.secondCounterClick()
-        }
-        val listenerButton3 = View.OnClickListener {
-            presenter.thirdCounterClick()
-        }
-
-        binding?.btnCounter1?.setOnClickListener(listenerButton1)
-        binding?.btnCounter2?.setOnClickListener(listenerButton2)
-        binding?.btnCounter3?.setOnClickListener(listenerButton3)
+        binding?.btnCounter1?.setOnClickListener { presenter.firstCounterClick() }
+        binding?.btnCounter2?.setOnClickListener { presenter.secondCounterClick() }
+        binding?.btnCounter3?.setOnClickListener { presenter.thirdCounterClick() }
     }
 
     override fun setFirstCounterText(text: String) {
