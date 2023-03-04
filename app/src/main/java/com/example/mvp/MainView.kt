@@ -7,7 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 //@AddToEndSingle - есть ещё такой алиас
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface MainView: MvpView {
-    fun setFirstCounterText(text: String)
-    fun setSecondCounterText(text: String)
-    fun setThirdCounterText(text: String)
+    fun init()
+    fun updateList()
 }

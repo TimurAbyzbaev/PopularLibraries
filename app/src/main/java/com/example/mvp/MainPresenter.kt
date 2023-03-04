@@ -2,20 +2,34 @@ package com.example.mvp
 
 import moxy.MvpPresenter
 
-class MainPresenter(private val model: CountersModel) : MvpPresenter<MainView>() {
+class MainPresenter(private val usersRepo: GithubUsersRepo) : MvpPresenter<MainView>() {
+    class UsersListPresenter : IUserListPresenter {
+        val users = mutableListOf<GithubUser>()
+        override var itemClickListener: ((UserItemView) -> Unit)? = null
+        override fun getCount() = users.size
 
-    fun firstCounterClick() {
-        val nextValue = model.next(0)
-        viewState.setFirstCounterText(nextValue.toString())
+        override fun bindView(view: UserItemView) {
+            val user = users[view.pos]
+            view.setLogin(user.login)
+        }
     }
 
-    fun secondCounterClick() {
-        val nextValue = model.next(1)
-        viewState.setSecondCounterText(nextValue.toString())
+    val usersListPresenter = UsersListPresenter()
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.init()
+        loadData()
+
+        usersListPresenter.itemClickListener = { itemView ->
+            //TODO: переход на экран пользователя
+        }
     }
 
-    fun thirdCounterClick() {
-        val nextValue = model.next(2)
-        viewState.setThirdCounterText(nextValue.toString())
+    private fun loadData() {
+        val users = usersRepo.getUsers()
+        usersListPresenter.users.addAll(users)
+        viewState.updateList()
     }
+
 }

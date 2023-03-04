@@ -1,34 +1,31 @@
 package com.example.mvp
 
 import android.os.Bundle
+import android.os.PersistableBundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
 class MainActivity : MvpAppCompatActivity(), MainView {
+    private val presenter by moxyPresenter { MainPresenter(GithubUsersRepo()) }
+    private var adapter: UsersRVAdapter? = null
 
-    private var binding: ActivityMainBinding? = null
-    private val presenter by moxyPresenter { MainPresenter (CountersModel()) }
+    private var vb: ActivityMainBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
-
-        binding?.btnCounter1?.setOnClickListener { presenter.firstCounterClick() }
-        binding?.btnCounter2?.setOnClickListener { presenter.secondCounterClick() }
-        binding?.btnCounter3?.setOnClickListener { presenter.thirdCounterClick() }
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        vb = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb?.root)
     }
 
-    override fun setFirstCounterText(text: String) {
-        binding?.btnCounter1?.text = text
+    override fun init() {
+        vb?.rvUsers?.layoutManager = LinearLayoutManager(this)
+        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        vb?.rvUsers?.adapter = adapter
     }
 
-    override fun setSecondCounterText(text: String) {
-        binding?.btnCounter2?.text = text
-    }
-
-    override fun setThirdCounterText(text: String) {
-        binding?.btnCounter3?.text = text
+    override fun updateList() {
+        adapter?.notifyDataSetChanged()
     }
 }
