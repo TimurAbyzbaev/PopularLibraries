@@ -1,44 +1,43 @@
 package com.example.mvp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.os.PersistableBundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.databinding.ActivityMainBinding
+import com.github.terrakok.cicerone.androidx.AppNavigator
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
+    private val navigator = AppNavigator(this, R.id.container)
 
-    private var binding: ActivityMainBinding? = null
-    private val presenter = MainPresenter(this)
+    private val presenter by moxyPresenter { MainPresenter(App.instance.router,
+        AndroidScreens()) }
+
+    private var vb: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
-
-        val listenerButton1 = View.OnClickListener {
-            presenter.firstCounterClick()
-        }
-        val listenerButton2 = View.OnClickListener {
-            presenter.secondCounterClick()
-        }
-        val listenerButton3 = View.OnClickListener {
-            presenter.thirdCounterClick()
-        }
-
-        binding?.btnCounter1?.setOnClickListener(listenerButton1)
-        binding?.btnCounter2?.setOnClickListener(listenerButton2)
-        binding?.btnCounter3?.setOnClickListener(listenerButton3)
+        vb = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb?.root)
     }
 
-    override fun setFirstCounterText(text: String) {
-        binding?.btnCounter1?.text = text
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        App.instance.navigationHolder.setNavigator(navigator)
     }
 
-    override fun setSecondCounterText(text: String) {
-        binding?.btnCounter2?.text = text
+    override fun onPause() {
+        super.onPause()
+        App.instance.navigationHolder.removeNavigator()
     }
 
-    override fun setThirdCounterText(text: String) {
-        binding?.btnCounter3?.text = text
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if(it is BackButtonListener && it.backPressed()){
+                return
+            }
+        }
+        presenter.backClicked()
     }
 }

@@ -1,21 +1,14 @@
 package com.example.mvp
 
-class MainPresenter(private val view: MainView) {
-    private val model = CountersModel()
+import com.github.terrakok.cicerone.Router
+import moxy.MvpPresenter
 
-    //Архитектурная ошибка. В качестве практического задания -- исправить
-    fun firstCounterClick() {
-        val nextValue = model.next(0)
-        view.setFirstCounterText(nextValue.toString())
+class MainPresenter (val router: Router, val screens: IScreens) : MvpPresenter<MainView>() {
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        router.replaceScreen(screens.users())
     }
-
-    fun secondCounterClick() {
-        val nextValue = model.next(1)
-        view.setSecondCounterText(nextValue.toString())
-    }
-
-    fun thirdCounterClick() {
-        val nextValue = model.next(2)
-        view.setThirdCounterText(nextValue.toString())
+    fun backClicked(){
+        router.exit()
     }
 }
