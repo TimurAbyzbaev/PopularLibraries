@@ -1,14 +1,15 @@
-package com.example.mvp
+package com.example.mvp.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mvp.databinding.ActivityMainBinding
+import com.example.mvp.App
 import com.example.mvp.databinding.FragmentUsersBinding
+import com.example.mvp.presenter.UsersPresenter
+import com.example.mvp.presenter.UsersRVAdapter
+import com.example.mvp.repository.GithubUsersRepo
+import com.example.mvp.utils.BackButtonListener
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 

@@ -1,5 +1,11 @@
-package com.example.mvp
+package com.example.mvp.presenter
 
+import com.example.mvp.IUserListPresenter
+import com.example.mvp.view.UserLogin
+import com.example.mvp.view.UsersView
+import com.example.mvp.model.GithubUser
+import com.example.mvp.repository.GithubUsersRepo
+import com.example.mvp.view.UserItemView
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 

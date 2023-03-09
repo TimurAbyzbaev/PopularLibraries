@@ -1,4 +1,6 @@
-package com.example.mvp
+package com.example.mvp.repository
+
+import com.example.mvp.model.GithubUser
 
 class GithubUsersRepo {
     private val repositories = listOf(
