@@ -1,4 +1,4 @@
-package com.example.mvp
+package com.example.mvp.domain.entities
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

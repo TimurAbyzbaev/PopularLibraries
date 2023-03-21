@@ -1,9 +1,11 @@
 package com.example.mvp
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.databinding.ActivityMainBinding
+import com.example.mvp.ui.users.MainPresenter
+import com.example.mvp.ui.users.MainView
+import com.example.mvp.utils.AndroidScreens
+import com.example.mvp.utils.BackButtonListener
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -12,7 +14,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private val navigator = AppNavigator(this, R.id.container)
 
     private val presenter by moxyPresenter { MainPresenter(App.instance.router,
-        AndroidScreens()) }
+        AndroidScreens()
+    ) }
 
     private var vb: ActivityMainBinding? = null
 

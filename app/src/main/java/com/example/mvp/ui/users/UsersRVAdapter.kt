@@ -1,4 +1,4 @@
-package com.example.mvp
+package com.example.mvp.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

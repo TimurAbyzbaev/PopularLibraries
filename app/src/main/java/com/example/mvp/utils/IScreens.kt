@@ -1,4 +1,4 @@
-package com.example.mvp
+package com.example.mvp.utils
 
 import com.github.terrakok.cicerone.Screen
 

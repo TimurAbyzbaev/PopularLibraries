@@ -1,14 +1,13 @@
-package com.example.mvp
+package com.example.mvp.ui.users
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mvp.databinding.ActivityMainBinding
+import com.example.mvp.App
+import com.example.mvp.data.GithubUsersRepo
 import com.example.mvp.databinding.FragmentUsersBinding
+import com.example.mvp.utils.BackButtonListener
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -17,7 +16,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         fun newInstance() = UsersFragment()
     }
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router) }
+        UsersPresenter(App.instance.router, GithubUsersRepo.Producer()) }
     var adapter: UsersRVAdapter? = null
     private var vb: FragmentUsersBinding? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -1,5 +1,6 @@
-package com.example.mvp
+package com.example.mvp.ui.users
 
+import com.example.mvp.utils.IScreens
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
