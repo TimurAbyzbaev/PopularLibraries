@@ -9,6 +9,7 @@ import com.example.mvp.data.ApiHolder
 import com.example.mvp.data.GithubUsersRepo
 import com.example.mvp.data.RetrofitGithubUsersRepo
 import com.example.mvp.databinding.FragmentUsersBinding
+import com.example.mvp.ui.image.GlideImageLoader
 import com.example.mvp.utils.AndroidScreens
 import com.example.mvp.utils.BackButtonListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -39,7 +40,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
     override fun init() {
         vb?.rvUsers?.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
         vb?.rvUsers?.adapter = adapter
     }
     override fun updateList() {
