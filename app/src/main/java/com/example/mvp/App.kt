@@ -1,6 +1,7 @@
 package com.example.mvp
 
 import android.app.Application
+import android.widget.Toast
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 
@@ -19,5 +20,9 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+    }
+
+    fun makeToast(text: String){
+        Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 }
