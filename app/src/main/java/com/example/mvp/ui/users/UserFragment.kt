@@ -11,6 +11,7 @@ import com.example.mvp.data.RetrofitGithubUserRepositories
 import com.example.mvp.databinding.UserLoginLayoutBinding
 import com.example.mvp.image.IImageLoader
 import com.example.mvp.ui.image.GlideImageLoader
+import com.example.mvp.utils.AndroidScreens
 import com.example.mvp.utils.BackButtonListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
@@ -32,7 +33,8 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
             RetrofitGithubUserRepositories(
                 ApiHolder.api,
                 user.login.toString()),
-            AndroidSchedulers.mainThread()
+            AndroidSchedulers.mainThread(),
+            AndroidScreens()
         )}
 
     private var adapter: UserRVAdapter? = null

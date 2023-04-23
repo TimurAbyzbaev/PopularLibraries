@@ -11,6 +11,7 @@ import com.example.mvp.data.GithubUsersRepo
 import com.example.mvp.data.IGithubUsersRepo
 import com.example.mvp.data.RetrofitGithubUserRepositories
 import com.example.mvp.image.IImageLoader
+import com.example.mvp.utils.IScreens
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -20,7 +21,8 @@ class UserPresenter(
     private val router: Router,
     private val imageLoader: IImageLoader<ImageView>,
     private val userRepositories: RetrofitGithubUserRepositories,
-    private val uiScheduler: Scheduler
+    private val uiScheduler: Scheduler,
+    private val screens: IScreens
 ) : MvpPresenter<UserView>() {
 
     class UsersRepositoriesListPresenter : IRepositoriesListPresenter {
@@ -46,6 +48,8 @@ class UserPresenter(
         usersRepositoriesListPresenter.itemClickListener = { itemView ->
             App.instance.makeToast("Forks: ${usersRepositoriesListPresenter
                 .repositories[itemView.pos].forks}")
+            val repo = usersRepositoriesListPresenter.repositories[itemView.pos]
+            router.navigateTo(screens.repository(repo))
         }
     }
 
