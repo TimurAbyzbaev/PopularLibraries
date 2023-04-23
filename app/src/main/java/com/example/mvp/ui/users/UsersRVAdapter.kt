@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvp.databinding.ListLayoutBinding
 import com.example.mvp.image.IImageLoader
 
-class UsersRVAdapter (val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
+class UsersRVAdapter (val presenter: IUserListPresenter,
+                      val imageLoader: IImageLoader<ImageView>) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent,
+        ViewHolder(
+            ListLayoutBinding.inflate(
+                LayoutInflater.from(parent.context), parent,
             false)).apply {
-            itemView.setOnClickListener { presenter.itemClickListener?.invoke(this) }
+            itemView.setOnClickListener { presenter.itemClickListener?.invoke(this)}
     }
 
     override fun getItemCount() = presenter.getCount()

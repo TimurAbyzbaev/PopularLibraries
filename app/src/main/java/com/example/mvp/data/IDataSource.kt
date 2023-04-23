@@ -16,6 +16,9 @@ interface IDataSource {
 
     @GET
     fun loadUser(@Path("login") login: String): Single<GithubUser>
+
+    @GET("users/{user}/repos")
+    fun loadUsersRepo(@Path("user") user: String): Single<List<GithubUsersRepo>>
 }
 
 object ApiHolder {

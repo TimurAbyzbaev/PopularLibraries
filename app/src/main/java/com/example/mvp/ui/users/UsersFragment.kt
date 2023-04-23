@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.App
 import com.example.mvp.data.ApiHolder
-import com.example.mvp.data.GithubUsersRepo
 import com.example.mvp.data.RetrofitGithubUsersRepo
 import com.example.mvp.databinding.FragmentUsersBinding
 import com.example.mvp.ui.image.GlideImageLoader
