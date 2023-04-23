@@ -7,7 +7,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.mvp.image.IImageLoader
+import com.example.mvp.mvp.image.IImageLoader
 
 class GlideImageLoader: IImageLoader<ImageView> {
     override fun loadInto(url: String, container: ImageView) {
