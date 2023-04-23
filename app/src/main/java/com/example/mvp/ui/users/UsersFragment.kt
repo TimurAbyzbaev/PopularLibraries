@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.App
+import com.example.mvp.data.ApiHolder
 import com.example.mvp.data.GithubUsersRepo
+import com.example.mvp.data.RetrofitGithubUsersRepo
 import com.example.mvp.databinding.FragmentUsersBinding
+import com.example.mvp.utils.AndroidScreens
 import com.example.mvp.utils.BackButtonListener
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -16,7 +20,12 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         fun newInstance() = UsersFragment()
     }
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(App.instance.router, GithubUsersRepo.Producer()) }
+        UsersPresenter(
+            AndroidSchedulers.mainThread(),
+            RetrofitGithubUsersRepo(ApiHolder.api),
+            App.instance.router,
+            AndroidScreens()
+        ) }
     var adapter: UsersRVAdapter? = null
     private var vb: FragmentUsersBinding? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
