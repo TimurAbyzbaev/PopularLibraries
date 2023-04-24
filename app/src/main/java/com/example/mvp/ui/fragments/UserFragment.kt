@@ -11,6 +11,7 @@ import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
 import com.example.mvp.databinding.UserLoginLayoutBinding
 import com.example.mvp.mvp.image.IImageLoader
+import com.example.mvp.mvp.model.cache.room.RoomRepositoriesCache
 import com.example.mvp.mvp.model.repo.room.Database
 import com.example.mvp.mvp.network.AndroidNetworkStatus
 import com.example.mvp.ui.image.GlideImageLoader
@@ -41,7 +42,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
             RetrofitGithubUserRepositories(
                 ApiHolder.api,
                 AndroidNetworkStatus(App.instance),
-                Database.getInstance()
+                RoomRepositoriesCache(Database.getInstance())
             ),
             AndroidSchedulers.mainThread(),
             AndroidScreens()
