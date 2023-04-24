@@ -2,6 +2,7 @@ package com.example.mvp
 
 import android.app.Application
 import android.widget.Toast
+import com.example.mvp.mvp.model.repo.room.Database
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 
@@ -20,6 +21,8 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        Database.create(this)
     }
 
     fun makeToast(text: String){

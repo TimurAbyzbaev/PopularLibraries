@@ -57,7 +57,7 @@ class UserPresenter(
 
     @SuppressLint("CheckResult")
     private fun loadRepositoriesList() {
-        userRepositories.getUserRepositories()
+        userRepositories.getUserRepositories(user)
             .observeOn(uiScheduler)
             .subscribe({repositories ->
                 usersRepositoriesListPresenter.repositories.clear()

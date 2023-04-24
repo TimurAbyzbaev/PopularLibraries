@@ -1,4 +1,5 @@
 package com.example.mvp.ui.fragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
 import com.example.mvp.databinding.UserLoginLayoutBinding
 import com.example.mvp.mvp.image.IImageLoader
+import com.example.mvp.mvp.model.repo.room.Database
+import com.example.mvp.mvp.network.AndroidNetworkStatus
 import com.example.mvp.ui.image.GlideImageLoader
 import com.example.mvp.navigation.AndroidScreens
 import com.example.mvp.ui.activity.BackButtonListener
@@ -30,12 +33,16 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
             }
         }
     }
+
     private val presenter: UserPresenter by moxyPresenter {
         val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
-        UserPresenter(user, App.instance.router, GlideImageLoader(),
+        UserPresenter(
+            user, App.instance.router, GlideImageLoader(),
             RetrofitGithubUserRepositories(
                 ApiHolder.api,
-                user.login.toString()),
+                AndroidNetworkStatus(App.instance),
+                Database.getInstance()
+            ),
             AndroidSchedulers.mainThread(),
             AndroidScreens()
         )
@@ -46,8 +53,10 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
     private val binding
         get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         UserLoginLayoutBinding.inflate(inflater, container, false).also {
             _binding = it
         }.root
