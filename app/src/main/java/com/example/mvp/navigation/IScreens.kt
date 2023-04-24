@@ -1,7 +1,7 @@
 package com.example.mvp.navigation
 
-import com.example.mvp.mvp.model.entity.GithubUser
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.github.terrakok.cicerone.Screen
 
 interface IScreens {

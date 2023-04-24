@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.App
 import com.example.mvp.mvp.model.api.ApiHolder
-import com.example.mvp.mvp.model.entity.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
 import com.example.mvp.databinding.UserLoginLayoutBinding
 import com.example.mvp.mvp.image.IImageLoader

@@ -1,7 +1,7 @@
 package com.example.mvp.mvp.presenter
 
 
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.example.mvp.mvp.view.RepositoryView
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter

@@ -1,7 +1,7 @@
 package com.example.mvp.mvp.model.api
 
-import com.example.mvp.mvp.model.entity.GithubUser
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import io.reactivex.rxjava3.core.Single

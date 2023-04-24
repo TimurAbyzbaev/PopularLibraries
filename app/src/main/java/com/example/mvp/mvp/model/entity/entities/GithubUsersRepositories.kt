@@ -1,4 +1,4 @@
-package com.example.mvp.mvp.model.entity
+package com.example.mvp.mvp.model.entity.entities
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose

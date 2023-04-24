@@ -1,8 +1,8 @@
 package com.example.mvp.navigation
 
 
-import com.example.mvp.mvp.model.entity.GithubUser
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.example.mvp.ui.fragments.RepositoryFragment
 import com.example.mvp.ui.fragments.UserFragment
 import com.example.mvp.ui.fragments.UsersFragment
