@@ -3,7 +3,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.mvp.App
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.example.mvp.databinding.FragmentRepositoryBinding
 import com.example.mvp.ui.activity.BackButtonListener
 import com.example.mvp.mvp.presenter.RepositoryPresenter

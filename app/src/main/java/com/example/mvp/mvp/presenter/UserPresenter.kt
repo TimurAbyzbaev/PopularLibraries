@@ -4,8 +4,8 @@ package com.example.mvp.mvp.presenter
 import android.annotation.SuppressLint
 import android.widget.ImageView
 import com.example.mvp.App
-import com.example.mvp.mvp.model.entity.GithubUser
-import com.example.mvp.mvp.model.entity.GithubUsersRepositories
+import com.example.mvp.mvp.model.entity.entities.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
 import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
 import com.example.mvp.mvp.image.IImageLoader
 import com.example.mvp.ui.adapters.UserRVAdapter
@@ -57,7 +57,7 @@ class UserPresenter(
 
     @SuppressLint("CheckResult")
     private fun loadRepositoriesList() {
-        userRepositories.getUserRepositories()
+        userRepositories.getUserRepositories(user)
             .observeOn(uiScheduler)
             .subscribe({repositories ->
                 usersRepositoriesListPresenter.repositories.clear()

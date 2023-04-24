@@ -1,7 +1,7 @@
 package com.example.mvp.mvp.presenter
 
 import android.annotation.SuppressLint
-import com.example.mvp.mvp.model.entity.GithubUser
+import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.IGithubUsersRepo
 import com.example.mvp.ui.adapters.UserRVAdapter
 import com.example.mvp.ui.adapters.UsersRVAdapter
