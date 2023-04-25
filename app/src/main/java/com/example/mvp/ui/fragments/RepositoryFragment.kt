@@ -8,10 +8,14 @@ import com.example.mvp.databinding.FragmentRepositoryBinding
 import com.example.mvp.ui.activity.BackButtonListener
 import com.example.mvp.mvp.presenter.RepositoryPresenter
 import com.example.mvp.mvp.view.RepositoryView
+import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class RepositoryFragment : MvpAppCompatFragment(), BackButtonListener, RepositoryView {
+    //При выполнении практического задания это должно отсюда уйти
+    @Inject lateinit var router: Router
     companion object {
         private const val REPOSITORY_ARG = "repository"
 
@@ -19,11 +23,12 @@ class RepositoryFragment : MvpAppCompatFragment(), BackButtonListener, Repositor
             arguments = Bundle().apply {
                 putParcelable(REPOSITORY_ARG, repo)
             }
+            App.instance.appComponent.inject(this)
         }
     }
     private val presenter: RepositoryPresenter by moxyPresenter {
         val repo = arguments?.getParcelable<GithubUsersRepositories>(REPOSITORY_ARG) as GithubUsersRepositories
-        RepositoryPresenter(repo, App.instance.router)
+        RepositoryPresenter(repo, router)
     }
 
     private var _binding: FragmentRepositoryBinding? = null
