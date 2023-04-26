@@ -2,7 +2,9 @@ package com.example.mvp.dagger
 
 import androidx.room.Room
 import com.example.mvp.App
+import com.example.mvp.mvp.model.cache.IRepositoriesCache
 import com.example.mvp.mvp.model.cache.IUserCache
+import com.example.mvp.mvp.model.cache.room.RoomRepositoriesCache
 import com.example.mvp.mvp.model.cache.room.RoomUserCache
 import com.example.mvp.mvp.model.repo.room.Database
 import dagger.Module
@@ -13,9 +15,18 @@ import javax.inject.Singleton
 class CacheModule {
     @Singleton
     @Provides
-    fun database(app: App): Database = Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).build()
+    fun database(app: App): Database =
+        Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).build()
 
     @Singleton
     @Provides
-    fun usersCache(database: Database): IUserCache = RoomUserCache(database)
+    fun usersCache(database: Database): IUserCache {
+        return RoomUserCache(database)
+    }
+
+    @Singleton
+    @Provides
+    fun repositoriesCache(database: Database): IRepositoriesCache {
+        return RoomRepositoriesCache(database)
+    }
 }

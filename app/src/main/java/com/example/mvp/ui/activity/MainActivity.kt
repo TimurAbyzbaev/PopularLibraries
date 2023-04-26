@@ -6,7 +6,6 @@ import com.example.mvp.R
 import com.example.mvp.databinding.ActivityMainBinding
 import com.example.mvp.mvp.presenter.MainPresenter
 import com.example.mvp.mvp.view.MainView
-import com.example.mvp.navigation.AndroidScreens
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
@@ -14,7 +13,8 @@ import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView {
-    @Inject lateinit var navigationHolder: NavigatorHolder
+    @Inject
+    lateinit var navigationHolder: NavigatorHolder
     private val navigator = AppNavigator(this, R.id.container)
 
     private val presenter by moxyPresenter {
@@ -44,7 +44,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
-            if(it is BackButtonListener && it.backPressed()){
+            if (it is BackButtonListener && it.backPressed()) {
                 return
             }
         }

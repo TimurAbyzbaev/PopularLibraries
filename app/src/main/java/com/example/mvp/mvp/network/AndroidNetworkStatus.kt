@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
-class AndroidNetworkStatus(context: Context): INetworkStatus {
+class AndroidNetworkStatus(context: Context) : INetworkStatus {
     private val statusSubject: BehaviorSubject<Boolean> =
         BehaviorSubject.create()
 
@@ -18,7 +18,7 @@ class AndroidNetworkStatus(context: Context): INetworkStatus {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val request = NetworkRequest.Builder().build()
         connectivityManager.registerNetworkCallback(request, object :
-        ConnectivityManager.NetworkCallback() {
+            ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 statusSubject.onNext(true)
             }

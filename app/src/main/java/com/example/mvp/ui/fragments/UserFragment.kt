@@ -1,35 +1,26 @@
 package com.example.mvp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.App
-import com.example.mvp.mvp.model.api.ApiHolder
-import com.example.mvp.mvp.model.entity.entities.GithubUser
-import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
 import com.example.mvp.databinding.UserLoginLayoutBinding
 import com.example.mvp.mvp.image.IImageLoader
-import com.example.mvp.mvp.model.cache.room.RoomRepositoriesCache
-import com.example.mvp.mvp.model.repo.room.Database
-import com.example.mvp.mvp.network.AndroidNetworkStatus
-import com.example.mvp.ui.image.GlideImageLoader
-import com.example.mvp.navigation.AndroidScreens
-import com.example.mvp.ui.activity.BackButtonListener
-import com.example.mvp.ui.adapters.UserRVAdapter
+import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.presenter.UserPresenter
 import com.example.mvp.mvp.view.UserView
-import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import com.example.mvp.ui.activity.BackButtonListener
+import com.example.mvp.ui.adapters.UserRVAdapter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
 
-    @Inject lateinit var database: Database
-    @Inject lateinit var router: Router
+    //@Inject lateinit var database: Database
+    //@Inject lateinit var router: Router
 
     companion object {
         private const val USER_ARG = "user"
@@ -38,22 +29,16 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
             arguments = Bundle().apply {
                 putParcelable(USER_ARG, user)
             }
-            App.instance.appComponent.inject(this)
+            //App.instance.appComponent.inject(this)
         }
     }
 
     val presenter: UserPresenter by moxyPresenter {
         val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
 
-        UserPresenter(
-            user,
-            router,
-            GlideImageLoader(),
-            RetrofitGithubUserRepositories(ApiHolder.api,
-                AndroidNetworkStatus(App.instance), RoomRepositoriesCache(database)),
-            AndroidSchedulers.mainThread(),
-            AndroidScreens()
-        )
+        UserPresenter(user).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     private var _binding: UserLoginLayoutBinding? = null
@@ -86,6 +71,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
         binding.textViewLogin.text = text
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateList() {
         adapter?.notifyDataSetChanged()
     }

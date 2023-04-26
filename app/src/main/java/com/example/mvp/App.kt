@@ -8,9 +8,9 @@ import com.example.mvp.dagger.DaggerAppComponent
 
 //import com.example.mvp.dagger.module.DaggerAppComponent
 
-class App: Application() {
-    companion object{
-        lateinit var instance:App
+class App : Application() {
+    companion object {
+        lateinit var instance: App
     }
 
     lateinit var appComponent: AppComponent
@@ -24,7 +24,7 @@ class App: Application() {
             .build()
     }
 
-    fun makeToast(text: String){
+    fun makeToast(text: String) {
         Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
     }
 }
