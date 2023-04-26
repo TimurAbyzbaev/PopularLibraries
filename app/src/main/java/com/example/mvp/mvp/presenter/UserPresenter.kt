@@ -4,28 +4,40 @@ package com.example.mvp.mvp.presenter
 import android.annotation.SuppressLint
 import android.widget.ImageView
 import com.example.mvp.App
+import com.example.mvp.mvp.image.IImageLoader
 import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.entity.entities.GithubUsersRepositories
-import com.example.mvp.mvp.model.repo.retrofit.RetrofitGithubUserRepositories
-import com.example.mvp.mvp.image.IImageLoader
+import com.example.mvp.mvp.model.repo.IGithubUserRepositories
+import com.example.mvp.mvp.model.repo.room.Database
+import com.example.mvp.mvp.view.UserView
+import com.example.mvp.navigation.AndroidScreens
 import com.example.mvp.ui.adapters.UserRVAdapter
 import com.example.mvp.ui.adapters.UsersRVAdapter
 import com.example.mvp.ui.users.IRepositoriesListPresenter
 import com.example.mvp.ui.users.IRepositoryItemView
-import com.example.mvp.mvp.view.UserView
-import com.example.mvp.navigation.IScreens
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class UserPresenter(
-    private val user: GithubUser,
-    private val router: Router,
-    private val imageLoader: IImageLoader<ImageView>,
-    private val userRepositories: RetrofitGithubUserRepositories,
-    private val uiScheduler: Scheduler,
-    private val screens: IScreens
-) : MvpPresenter<UserView>() {
+class UserPresenter(private val user: GithubUser) : MvpPresenter<UserView>() {
+    @Inject
+    lateinit var mainThreadScheduler: Scheduler
+
+    @Inject
+    lateinit var database: Database
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var userRepositories: IGithubUserRepositories
+
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
+
+    @Inject
+    lateinit var screens: AndroidScreens
 
     class UsersRepositoriesListPresenter : IRepositoriesListPresenter {
         val repositories = mutableListOf<GithubUsersRepositories>()
@@ -36,7 +48,7 @@ class UserPresenter(
             repositories[view.pos].name?.let { view.setRepositoryName(it) }
         }
 
-        override fun bindView(view: UsersRVAdapter.ViewHolder) { }
+        override fun bindView(view: UsersRVAdapter.ViewHolder) {}
     }
 
     val usersRepositoriesListPresenter = UsersRepositoriesListPresenter()
@@ -48,8 +60,12 @@ class UserPresenter(
         user.avatarUrl?.let { viewState.setAvatar(imageLoader, it) }
         loadRepositoriesList()
         usersRepositoriesListPresenter.itemClickListener = { itemView ->
-            App.instance.makeToast("Forks: ${usersRepositoriesListPresenter
-                .repositories[itemView.pos].forks}")
+            App.instance.makeToast(
+                "Forks: ${
+                    usersRepositoriesListPresenter
+                        .repositories[itemView.pos].forks
+                }"
+            )
             val repo = usersRepositoriesListPresenter.repositories[itemView.pos]
             router.navigateTo(screens.repository(repo))
         }
@@ -58,8 +74,8 @@ class UserPresenter(
     @SuppressLint("CheckResult")
     private fun loadRepositoriesList() {
         userRepositories.getUserRepositories(user)
-            .observeOn(uiScheduler)
-            .subscribe({repositories ->
+            .observeOn(mainThreadScheduler)
+            .subscribe({ repositories ->
                 usersRepositoriesListPresenter.repositories.clear()
                 usersRepositoriesListPresenter.repositories.addAll(repositories)
                 viewState.updateList()

@@ -3,22 +3,29 @@ package com.example.mvp.mvp.presenter
 import android.annotation.SuppressLint
 import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.IGithubUsersRepo
+import com.example.mvp.mvp.view.UsersView
+import com.example.mvp.mvp.view.list.UserItemView
+import com.example.mvp.navigation.IScreens
 import com.example.mvp.ui.adapters.UserRVAdapter
 import com.example.mvp.ui.adapters.UsersRVAdapter
 import com.example.mvp.ui.users.IUserListPresenter
-import com.example.mvp.mvp.view.list.UserItemView
-import com.example.mvp.mvp.view.UsersView
-import com.example.mvp.navigation.IScreens
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 class UsersPresenter(
-    private val uiScheduler: Scheduler,
-    private val usersRepo: IGithubUsersRepo,
-    private val router: Router,
-    private val screens: IScreens
+    private val uiScheduler: Scheduler
 ) : MvpPresenter<UsersView>() {
+    @Inject
+    lateinit var usersRepo: IGithubUsersRepo
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var screens: IScreens
+
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GithubUser>()
         override var itemClickListener: ((UserItemView) -> Unit)? = null
@@ -44,7 +51,6 @@ class UsersPresenter(
             router.navigateTo(screens.user(user))
         }
     }
-
 
 
     @SuppressLint("CheckResult")

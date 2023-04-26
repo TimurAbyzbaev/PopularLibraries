@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvp.databinding.ReposytoriesListLayoutBinding
+import com.example.mvp.mvp.view.list.RepositoryItemView
 import com.example.mvp.ui.users.IRepositoriesListPresenter
 import com.example.mvp.ui.users.IRepositoryItemView
-import com.example.mvp.mvp.view.list.RepositoryItemView
 
 class UserRVAdapter(val presenter: IRepositoriesListPresenter) :
     RecyclerView.Adapter<UserRVAdapter.ViewHolder>() {
@@ -14,7 +14,9 @@ class UserRVAdapter(val presenter: IRepositoriesListPresenter) :
         ViewHolder(
             ReposytoriesListLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent,
-                false)).apply {
+                false
+            )
+        ).apply {
             itemView.setOnClickListener {
                 presenter.itemClickListener?.invoke(this)
             }
@@ -28,7 +30,7 @@ class UserRVAdapter(val presenter: IRepositoriesListPresenter) :
     inner class ViewHolder(val vb: ReposytoriesListLayoutBinding) :
         RecyclerView.ViewHolder(vb.root), RepositoryItemView, IRepositoryItemView {
         override var pos = -1
-        override fun setRepositoryName(text: String) = with(vb){
+        override fun setRepositoryName(text: String) = with(vb) {
             tvRepository.text = text
         }
     }
