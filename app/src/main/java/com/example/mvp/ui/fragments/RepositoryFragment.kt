@@ -34,7 +34,7 @@ class RepositoryFragment : MvpAppCompatFragment(), BackButtonListener, Repositor
         val repo = arguments?.getParcelable<GithubUsersRepositories>(REPOSITORY_ARG)
                 as GithubUsersRepositories
         RepositoryPresenter(repo).apply {
-            App.instance.appComponent.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
         }
 
     }

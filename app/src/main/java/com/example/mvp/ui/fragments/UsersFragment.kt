@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvp.App
+import com.example.mvp.dagger.user.UserSubcomponent
 import com.example.mvp.databinding.FragmentUsersBinding
 import com.example.mvp.mvp.presenter.UsersPresenter
 import com.example.mvp.mvp.view.UsersView
@@ -20,9 +21,12 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         fun newInstance() = UsersFragment()
     }
 
+    var userSubcomponent: UserSubcomponent? = null
+
     val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter(AndroidSchedulers.mainThread()).apply {
-            App.instance.appComponent.inject(this)
+            userSubcomponent = App.instance.initUserSubcomponent()
+            userSubcomponent?.inject(this)
         }
     }
 

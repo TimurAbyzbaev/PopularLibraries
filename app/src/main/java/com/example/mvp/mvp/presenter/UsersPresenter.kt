@@ -1,6 +1,7 @@
 package com.example.mvp.mvp.presenter
 
 import android.annotation.SuppressLint
+import com.example.mvp.dagger.user.IUserScopeContainer
 import com.example.mvp.mvp.model.entity.entities.GithubUser
 import com.example.mvp.mvp.model.repo.IGithubUsersRepo
 import com.example.mvp.mvp.view.UsersView
@@ -25,6 +26,8 @@ class UsersPresenter(
 
     @Inject
     lateinit var screens: IScreens
+    @Inject
+    lateinit var userScopeContainer: IUserScopeContainer
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GithubUser>()
@@ -69,5 +72,11 @@ class UsersPresenter(
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        userScopeContainer.releaseUserScope()
+        println("USER_SCOPE_RELEASED")
+        super.onDestroy()
     }
 }

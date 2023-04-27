@@ -19,9 +19,6 @@ import moxy.ktx.moxyPresenter
 
 class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
 
-    //@Inject lateinit var database: Database
-    //@Inject lateinit var router: Router
-
     companion object {
         private const val USER_ARG = "user"
 
@@ -29,7 +26,6 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
             arguments = Bundle().apply {
                 putParcelable(USER_ARG, user)
             }
-            //App.instance.appComponent.inject(this)
         }
     }
 
@@ -37,7 +33,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
         val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
 
         UserPresenter(user).apply {
-            App.instance.appComponent.inject(this)
+            App.instance.initRepositorySubcomponent()?.inject(this)
         }
     }
 
